@@ -1,0 +1,14 @@
+name: Conventional Commits
+
+on:
+  push:
+    branches: [ 'feature\**']
+
+jobs:
+  build:
+    name: NF7-DO-03
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: webiny/action-conventional-commits@v1.0.5
