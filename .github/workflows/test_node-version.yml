@@ -1,0 +1,26 @@
+name: test version node
+
+on:
+  pull_request:
+    types:
+      - opened
+    branches: [ 'develop']
+
+jobs:
+  build:
+    name: NF8-DO-01
+    if: ${{ startsWith( github.event.pull_request.head.ref, 'feature/' ) }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        version: [14, 16]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{matrix.version}}
+      - run: npm ci
+      - run: npm run build --if-present
+      - run: npm run test
